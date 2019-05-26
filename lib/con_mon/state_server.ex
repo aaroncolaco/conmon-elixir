@@ -27,7 +27,7 @@ defmodule ConMon.StateServer do
     GenServer.call(@me, :get_state)
   end
 
-  def handle_cast(:clear, state) do
+  def handle_cast(:clear, _state) do
     {:noreply, %{status: nil, downtime: []}}
   end
 
