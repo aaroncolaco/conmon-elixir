@@ -17,13 +17,16 @@ defmodule ConMon.Application do
   # List all child processes to be supervised
   def children(:host) do
     [
-      ConMon.StateServer
+      ConMon.StateServer,
+      {ConMon.CheckServer, 2000}
     ]
   end
 
+  # all besides host
   def children(_target) do
     [
-      ConMon.StateServer
+      ConMon.StateServer,
+      {ConMon.CheckServer, 15000}
     ]
   end
 end
