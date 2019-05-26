@@ -12,7 +12,7 @@ defmodule ConMon.StateServer do
   end
 
   def clear_state do
-    GenServer.call(@me, :clear)
+    GenServer.cast(@me, :clear)
   end
 
   def connected do
@@ -80,5 +80,8 @@ defmodule ConMon.StateServer do
     end
   end
 
-  def handle_call(:get_state, _from, state), do: {:reply, state, state}
+  def handle_call(:get_state, _from, state) do
+    return_state = Map.put_new(state, :outage_count, Enum.count(state.downtime))
+    {:reply, return_state, state}
+  end
 end
