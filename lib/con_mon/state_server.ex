@@ -52,7 +52,12 @@ defmodule ConMon.StateServer do
 
         {:noreply, state}
 
-      _ ->
+      nil ->
+        state = %{
+          state
+          | status: :connected
+        }
+
         {:noreply, state}
     end
   end
