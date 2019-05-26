@@ -17,15 +17,13 @@ defmodule ConMon.Application do
   # List all child processes to be supervised
   def children(:host) do
     [
-      # Starts a worker by calling: ConMon.Worker.start_link(arg)
-      # {ConMon.Worker, arg},
+      ConMon.StateServer
     ]
   end
 
   def children(_target) do
     [
-      # Starts a worker by calling: ConMon.Worker.start_link(arg)
-      # {ConMon.Worker, arg},
+      ConMon.StateServer
     ]
   end
 end
