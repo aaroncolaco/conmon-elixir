@@ -81,7 +81,26 @@ defmodule ConMon.StateServer do
   end
 
   def handle_call(:get_state, _from, state) do
-    return_state = Map.put_new(state, :outage_count, Enum.count(state.downtime))
+    downtime_duration =
+      state.downtime
+      |> Enum.reduce(0, fn tuple_log, acc ->
+        calculate_time_difference(tuple_log) + acc
+      end)
+
+    return_state =
+      state
+      |> Map.put_new(:outage_count, Enum.count(state.downtime))
+      |> Map.put_new(:downtime_duration, downtime_duration) # in milliseconds
+
     {:reply, return_state, state}
+  end
+
+  defp calculate_time_difference(time_tuple) do
+    time_list = Tuple.to_list time_tuple
+    case time_list do
+      [disconnect_time = %DateTime{} , connect_time = %DateTime{}] -> 
+        DateTime.diff(connect_time, disconnect_time, :millisecond)
+      _ -> 0
+    end
   end
 end
