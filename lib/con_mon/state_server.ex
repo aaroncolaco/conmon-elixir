@@ -90,17 +90,26 @@ defmodule ConMon.StateServer do
     return_state =
       state
       |> Map.put_new(:outage_count, Enum.count(state.downtime))
-      |> Map.put_new(:downtime_duration, downtime_duration) # in milliseconds
+      |> Map.put_new(:downtime_duration, downtime_duration)
 
     {:reply, return_state, state}
   end
 
   defp calculate_time_difference(time_tuple) do
-    time_list = Tuple.to_list time_tuple
+    time_list = Tuple.to_list(time_tuple)
+
+    # if the log has both disconnect and connect time, find the difference
+    # if the log has only disconnect time it means still isn't connected. So calculate difference with current time
+    # any other case return 0 difference
     case time_list do
-      [disconnect_time = %DateTime{} , connect_time = %DateTime{}] -> 
+      [disconnect_time = %DateTime{}, connect_time = %DateTime{}] ->
         DateTime.diff(connect_time, disconnect_time, :millisecond)
-      _ -> 0
+
+      [disconnect_time = %DateTime{}] ->
+        DateTime.diff(DateTime.utc_now(), disconnect_time, :millisecond)
+
+      _ ->
+        0
     end
   end
 end
