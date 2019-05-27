@@ -1,6 +1,10 @@
 # ConMon
 
-**TODO: Add description**
+This is a Elixir Nerves application to monitor and log Internet downtime by pinging a list of hosts.
+
+## Prerequisites
+- Elixir
+- Nerves
 
 ## Targets
 
@@ -15,13 +19,18 @@ information about targets see:
 https://hexdocs.pm/nerves/targets.html#content
 
 ## Getting Started
+- Clone repository
 
-To start your Nerves app:
+- To start your Nerves app:
   * `export MIX_TARGET=my_target` or prefix every command with
     `MIX_TARGET=my_target`. For example, `MIX_TARGET=rpi3`
   * Install dependencies with `mix deps.get`
   * Create firmware with `mix firmware`
   * Burn to an SD card with `mix firmware.burn`
+  * OR run on host with `iex -S mix`
+
+- To ssh to the pi and access console on your local network you can run: `ssh con_mon.local`
+- To check logs: Run `ConMon.StateServer.get_state` in the iex console
 
 ## Contributors:
 - [Aaron Colaco](http://aaroncolaco.com)
