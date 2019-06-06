@@ -32,6 +32,14 @@ https://hexdocs.pm/nerves/targets.html#content
 - To ssh to the pi and access console on your local network you can run: `ssh con_mon.local`
 - To check logs: Run `ConMon.StateServer.get_state` in the iex console
 
+
+### Note
+After ssh use this to auth pi with firewall
+```
+a = "{\"user\":\"<username>\",\"submit\":\"Login\",\"passwd\":\"<password>\",\"actualUrl\":\"8.8.8.8\"}"
+:hackney.post("http://172.16.1.254/userSense", [], a, [])
+```
+
 ## Contributors:
 - [Aaron Colaco](http://aaroncolaco.com)
 
