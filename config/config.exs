@@ -70,13 +70,15 @@ key_mgmt = System.get_env("NERVES_NETWORK_KEY_MGMT") || "WPA-PSK"
 settings = [
   networks: [
     [ssid: "Aaron", psk: "password", key_mgmt: :"WPA-PSK", priority: 100],
-    [ssid: "Aaron's iPhone", psk: "aaron4321", key_mgmt: :"WPA-PSK", priority: 90]
+    [ssid: "dlink", psk: "9999999999", key_mgmt: :"WPA-PSK", priority: 90],
+    [ssid: "Aaron's iPhone", psk: "aaron4321", key_mgmt: :"WPA-PSK", priority: 80]
   ]
 ]
 
-config :nerves_network, default: [
-  wlan0: settings
-]
+config :nerves_network,
+  default: [
+    wlan0: settings
+  ]
 
 # Import target specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

@@ -18,7 +18,8 @@ defmodule ConMon.Application do
   def children(:host) do
     [
       ConMon.StateServer,
-      {ConMon.CheckServer, 2000}
+      {ConMon.CheckServer, 2000},
+      {Plug.Cowboy, scheme: :http, plug: ConMon.Http, options: [port: 8000]}
     ]
   end
 
@@ -26,7 +27,8 @@ defmodule ConMon.Application do
   def children(_target) do
     [
       ConMon.StateServer,
-      {ConMon.CheckServer, 15000}
+      {ConMon.CheckServer, 15000},
+      {Plug.Cowboy, scheme: :http, plug: ConMon.Http, options: [port: 8000]}
     ]
   end
 end
