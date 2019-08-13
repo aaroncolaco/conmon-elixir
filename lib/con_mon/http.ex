@@ -1,5 +1,6 @@
 defmodule ConMon.Http do
   use Plug.Router
+  alias ConMon.TimeConverter
 
   plug(:match)
   plug(Plug.Parsers, parsers: [:json], json_decoder: Poison)
@@ -12,7 +13,8 @@ defmodule ConMon.Http do
       Poison.encode!(%{
         status: state_logs.status,
         outageCount: state_logs.outage_count,
-        downtimeDuration: "#{state_logs.downtime_duration / 1000} seconds"
+        downtimeDuration:
+          TimeConverter.timestamp_to_string(state_logs.downtime_duration, :milliseconds)
       })
 
     send_resp(conn, 200, response)
