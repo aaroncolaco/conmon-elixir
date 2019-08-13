@@ -21,6 +21,6 @@ defmodule ConMon.TimeConverter do
   end
 
   def timestamp_to_string(timestamp, :milliseconds) do
-    __MODULE__.seconds_to_string(div(timestamp, 1000))
+    __MODULE__.timestamp_to_string(div(timestamp, 1000), :seconds)
   end
 end

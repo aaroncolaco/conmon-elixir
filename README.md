@@ -36,8 +36,29 @@ https://hexdocs.pm/nerves/targets.html#content
 ### Note
 After ssh use this to auth pi with firewall
 ```
-a = "{\"user\":\"<username>\",\"submit\":\"Login\",\"passwd\":\"<password>\",\"actualUrl\":\"8.8.8.8\"}"
+a = "{\"user\":\"USERNAME\",\"submit\":\"Login\",\"passwd\":\"PASSWORD\",\"actualUrl\":\"8.8.8.8\"}"
 :hackney.post("http://172.16.1.254/userSense", [], a, [])
+```
+After update this is the new way to auth:
+```
+headers = [
+  {"Host", "172.16.1.254"},
+  {"Connection", "keep-alive"},
+  {"Content-Length", "76"},
+  {"Cache-Control", "max-age=0"},
+  {"Origin", "http://8.8.8.8"},
+  {"Upgrade-Insecure-Requests", "1"},
+  {"Content-Type", "application/x-www-form-urlencoded"},
+  {"User-Agent",
+   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36"},
+  {"Accept",
+   "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3"},
+  {"Referer", "http://8.8.8.8/"},
+  {"Accept-Encoding", "gzip, deflate"},
+  {"Accept-Language", "en-US,en;q=0.9"}
+]
+url= "http://172.16.1.254/userSense?user=USERNAME&passwd=PASSWORD&otp=&submit=Login&actualurl=http%3A%2F%2F8.8.8.8%2F"
+:hackney.post(url, headers, [], []) 
 ```
 
 ## Contributors:
