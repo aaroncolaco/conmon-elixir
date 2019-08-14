@@ -8,13 +8,15 @@ defmodule ConMon.Http do
 
   get "/" do
     state_logs = ConMon.StateServer.get_state()
+    latest_downtime = TimeConverter.timestamp_to_string(state_logs.latest_downtime, :milliseconds)
 
     response =
       Poison.encode!(%{
         status: state_logs.status,
         outageCount: state_logs.outage_count,
-        downtimeDuration:
-          TimeConverter.timestamp_to_string(state_logs.downtime_duration, :milliseconds)
+        totalDowntimeDuration:
+          TimeConverter.timestamp_to_string(state_logs.downtime_duration, :milliseconds),
+        latestDowntimeDuration: latest_downtime
       })
 
     send_resp(conn, 200, response)

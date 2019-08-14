@@ -91,8 +91,16 @@ defmodule ConMon.StateServer do
       state
       |> Map.put_new(:outage_count, Enum.count(state.downtime))
       |> Map.put_new(:downtime_duration, downtime_duration)
+      |> Map.put_new(:latest_downtime, get_latest_downtime(state))
 
     {:reply, return_state, state}
+  end
+
+  defp get_latest_downtime(state) do
+    case Enum.at(state.downtime, 0) do
+      nil -> 0
+      latest_tuple -> calculate_time_difference(latest_tuple)
+    end
   end
 
   defp calculate_time_difference(time_tuple) do
