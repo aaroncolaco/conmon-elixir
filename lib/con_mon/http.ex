@@ -14,9 +14,9 @@ defmodule ConMon.Http do
       Poison.encode!(%{
         status: state_logs.status,
         outageCount: state_logs.outage_count,
-        totalDowntimeDuration:
+        totalDowntime:
           TimeConverter.timestamp_to_string(state_logs.downtime_duration, :milliseconds),
-        latestDowntimeDuration: latest_downtime
+        latestDowntime: latest_downtime
       })
 
     send_resp(conn, 200, response)
