@@ -57,7 +57,7 @@ node_name = if Mix.env() != :prod, do: "con_mon"
 config :nerves_init_gadget,
   ifname: "wlan0",
   address_method: :dhcp,
-  mdns_domain: "con_mon.local",
+  mdns_domain: "fiire.local",
   node_name: node_name,
   node_host: :mdns_domain
 
@@ -70,7 +70,7 @@ key_mgmt = System.get_env("NERVES_NETWORK_KEY_MGMT") || "WPA-PSK"
 settings = [
   networks: [
     [ssid: "Aaron", psk: "password", key_mgmt: :"WPA-PSK", priority: 100],
-    [ssid: "dlink", psk: "9999999999", key_mgmt: :"WPA-PSK", priority: 90],
+    [ssid: "FiiRE-2", psk: "9999999999", key_mgmt: :"WPA-PSK", priority: 90],
     [ssid: "Aaron's iPhone", psk: "aaron4321", key_mgmt: :"WPA-PSK", priority: 80]
   ]
 ]

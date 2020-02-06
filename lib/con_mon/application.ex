@@ -8,6 +8,10 @@ defmodule ConMon.Application do
   use Application
 
   def start(_type, _args) do
+
+    # Authenticat with Firewall 
+    ConMon.FirewallAuthenticator.authenticate()
+
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: ConMon.Supervisor]
@@ -27,8 +31,8 @@ defmodule ConMon.Application do
   def children(_target) do
     [
       ConMon.StateServer,
-      {ConMon.CheckServer, 15000},
-      {Plug.Cowboy, scheme: :http, plug: ConMon.Http, options: [port: 8000]}
+      {ConMon.CheckServer, 800},
+      {Plug.Cowboy, scheme: :http, plug: ConMon.Http, options: [port: 80]}
     ]
   end
 end
