@@ -31,7 +31,8 @@ defmodule ConMon.Http do
     |> Enum.map(fn
       {down, up} ->
         [
-          DateTime.to_string(DateTime.add(up, 19800, :second)), # make time +5:30 for india
+          # make time +5:30 for india
+          DateTime.to_string(DateTime.add(up, 19800, :second)),
           DateTime.to_string(DateTime.add(down, 19800, :second))
         ]
 

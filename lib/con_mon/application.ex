@@ -8,7 +8,6 @@ defmodule ConMon.Application do
   use Application
 
   def start(_type, _args) do
-
     # Authenticat with Firewall 
     ConMon.FirewallAuthenticator.authenticate()
 

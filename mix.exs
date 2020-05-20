@@ -1,18 +1,31 @@
 defmodule ConMon.MixProject do
   use Mix.Project
 
-  @all_targets [:rpi, :rpi0, :rpi2, :rpi3, :rpi3a, :bbb, :x86_64]
+  @app :con_mon
+  @all_targets [:rpi3]
 
   def project do
     [
-      app: :con_mon,
+      app: @app,
       version: "0.1.0",
       elixir: "~> 1.8",
-      archives: [nerves_bootstrap: "~> 1.5"],
+      archives: [nerves_bootstrap: "~> 1.8"],
       start_permanent: Mix.env() == :prod,
       build_embedded: true,
       aliases: [loadconfig: [&bootstrap/1]],
+      preferred_cli_target: [run: :host, test: :host],
+      releases: [{@app, release()}],
       deps: deps()
+    ]
+  end
+
+  def release do
+    [
+      overwrite: true,
+      cookie: "#{@app}_cookie",
+      include_erts: &Nerves.Release.erts/0,
+      steps: [&Nerves.Release.init/1, :assemble],
+      strip_beams: Mix.env() == :prod
     ]
   end
 
