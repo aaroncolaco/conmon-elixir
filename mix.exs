@@ -55,6 +55,7 @@ defmodule ConMon.MixProject do
       {:hackney, "~> 1.15.1"},
       {:poison, "~> 4.0"},
       {:plug_cowboy, "~> 2.2.1"},
+      {:httpoison, "~> 1.6"},
 
       # Dependencies for all targets except :host
       {:nerves_runtime, "~> 0.11.1", targets: @all_targets},

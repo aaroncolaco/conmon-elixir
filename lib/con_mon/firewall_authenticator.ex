@@ -1,5 +1,5 @@
 defmodule ConMon.FirewallAuthenticator do
-  @username "aaron1"
+  @username "aaron"
   @password "123456"
 
   def authenticate do
@@ -20,10 +20,14 @@ defmodule ConMon.FirewallAuthenticator do
       {"Accept-Language", "en-US,en;q=0.9"}
     ]
 
-    url =
-      "http://172.16.1.254/userSense?user=#{@username}&passwd=#{@password}&otp=&submit=Login&actualurl=http%3A%2F%2F8.8.8.8%2F&userdelete=yes"
+    passwd = "passwd=#{@password}"
+    user = "&user=#{@username}"
+    meta = "&otp=&submit=Login&actualurl=http%3A%2F%2F8.8.8.8%2F&userdelete=yes"
+    data = passwd <> user <> meta
 
-    :hackney.post(url, headers, [], [])
+    url = "http://172.16.1.254/userSense"
+
+    HTTPoison.post(url, data, headers)
 
     Process.sleep(3000)
   end
